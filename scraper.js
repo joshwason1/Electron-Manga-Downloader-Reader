@@ -1,7 +1,9 @@
 var request = require('request'),
     cheerio = require('cheerio'),
     urls = [],
-    titles = [];
+    titles = []
+    images = []
+    genres = [];
 
 request("http://mangafox.me/directory/", function(err, resp,body) {
     var $ = cheerio.load(body);
@@ -11,13 +13,24 @@ request("http://mangafox.me/directory/", function(err, resp,body) {
         var title = $(this).text();
         titles.push(title);
     });
+
+    $('.manga_text').each(function() {
+        var genre = $(this).find('.info').first().attr('title');
+        genres.push(genre);
+    });
+
+    $('img', '.list').each(function() {
+        var image = $(this).attr('src');
+        images.push(image);
+    });
+
+    let html = document.getElementById('list').outerHTML;
+    let $$ = cheerio.load(html);
+
     for (i = 0; i < urls.length; i++) {
-        var x = document.createElement("P");
-        var t = document.createTextNode(titles[i]);
-        var u = document.createTextNode(urls[i]);
-        x.appendChild(t);
-        x.appendChild(document.createElement("BR"));
-        x.appendChild(u);
-        document.body.appendChild(x);
+        $$('#list').append(`<li class="manga"><img src="${images[i]}"><a href="${urls[i]}">${titles[i]}</a><br>${genres[i]}</li>`);
     }
+
+    console.log($$.html());
+    document.getElementById('list').outerHTML = $$.html();
 });
