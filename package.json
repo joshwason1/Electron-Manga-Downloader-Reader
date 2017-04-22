@@ -2,10 +2,15 @@
   "name": "manga-downloader-electron",
   "version": "1.0.0",
   "description": "Download and read manga offline. Bulit with electron.",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron main.js"
   },
   "author": "Josh Wason",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "electron": "^1.6.5",
+    "request": "^2.81.0"
+  }
 }

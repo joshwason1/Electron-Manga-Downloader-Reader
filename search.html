@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <title>Manga Downloader and Reader by Josh Wason</title>
     <link rel="stylesheet" href="styles/bulma.css" type="text/css">
+    <script>
+        const searchManga = require('./search.js');
+        const mangaData = require('./mangaData.js');
+    </script>
 </head>
 
 <body>
@@ -24,9 +28,9 @@
             <nav class="tabs is-boxed is-fullwidth">
                 <div class="container">
                     <ul>
-                        <li class="is-active"><a href="index.html">Home</a></li>
+                        <li><a href="index.html">Home</a></li>
                         <li><a href="catalog.html">Catalog</a></li>
-                        <li><a href="search.html">Search</a></li>
+                        <li class="is-active"><a href="search.html">Search</a></li>
                         <li><a href="sources.html">Sources</a></li>
                         <li><a href="favourites.html">Favourites</a></li>
                         <li><a href="downloads.html">Downloads</a></li>
@@ -36,17 +40,35 @@
         </div>
     </section>
 
-    <div class="container">
+    <div class="container" id="content">
         <section class="section">
-            <div class="content">
-                <div class="columns is-multiline is-mobile" id="list">
+            <div class="field has-addons has-addons-centered">
+                <p class="control">
+                    <input class="input is-dark" id="search" type="text" placeholder="Find Manga" onkeydown = "if (event.keyCode == 13)
+                        searchManga.search()"/>
+                </p>
+                <p class="control">
+                    <a class="button is-dark" onclick="searchManga.search()">
+                        Search
+                    </a>
+                </p>
+            </div>
+        </section>
 
-                </div>
+        <section class="section">
+            <div class="columns is-multiline is-mobile" id="result">
+
             </div>
         </section>
     </div>
 
-    <script>require('./scraper.js')</script>
 </body>
+
+<script>
+    let sources = require("./sources.json")
+    if (sources.length == 0) {
+        document.getElementById('result').innerHTML = "No sources selected, please select at least 1 source from the sources tab."
+    }
+</script>
 
 </html>

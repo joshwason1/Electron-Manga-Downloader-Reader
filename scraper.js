@@ -1,8 +1,8 @@
 var request = require('request'),
     cheerio = require('cheerio'),
     urls = [],
-    titles = []
-    images = []
+    titles = [],
+    images = [],
     genres = [];
 
 request("http://mangafox.me/directory/", function(err, resp,body) {
@@ -28,7 +28,7 @@ request("http://mangafox.me/directory/", function(err, resp,body) {
     let $$ = cheerio.load(html);
 
     for (i = 0; i < urls.length; i++) {
-        $$('#list').append(`<li class="manga"><img src="${images[i]}"><a href="${urls[i]}">${titles[i]}</a><br>${genres[i]}</li>`);
+        $$('#list').append(`<div class="column is-2-desktop is-3-tablet is-4-mobile"><article class="box" style="height: 100%;"><p class="title is-4">${titles[i]}</p><p class="subtitle is-6">${genres[i]}</p><figure class="image"><img src="${images[i]}"></figure></article></div>`);
     }
 
     console.log($$.html());
